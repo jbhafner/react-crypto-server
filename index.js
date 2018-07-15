@@ -18,7 +18,7 @@ app.use("/api/auth", authRoutes);
 // app.use("/api/coins", coinRoutes);
 app.use("/api/users/:id/myCoins", loginRequired, ensureCorrectUser, coinRoutes);
 
-app.get("/api/coins/", loginRequired, async function(req, res, next) {
+app.get("/api/myCoins/", loginRequired, async function(req, res, next) {
   try {
     let myCoins = await db.MyCoins.find()
       .sort({
