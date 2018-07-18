@@ -9,7 +9,7 @@ const {
   createCoin,
   getMyCoin,
   deleteMyCoin
-} = require("../handlers/MyCoins.js");
+} = require("../handlers/myCoins.js");
 // const Coins = require("../models/coin.js");
 
 // router.use(bodyParser.json());
