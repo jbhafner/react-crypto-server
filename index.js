@@ -9,6 +9,7 @@ const errorHandler = require("./handlers/error");
 const coinRoutes = require("./routes/coins");
 const { loginRequired, ensureCorrectUser } = require("./middleware/auth");
 const db = require("./models");
+const PORT = process.env.PORT || 3025;
 
 app.use(morgan("tiny"));
 app.use(bodyParser.json());
@@ -18,9 +19,14 @@ app.use("/api/auth", authRoutes);
 // app.use("/api/coins", coinRoutes);
 app.use("/api/users/:id/myCoins", loginRequired, ensureCorrectUser, coinRoutes);
 
-app.get("/api/myCoins/", loginRequired, async function(req, res, next) {
+app.get("/api/users/:id/myCoins/", loginRequired, async function(
+  req,
+  res,
+  next
+) {
   try {
-    let myCoins = await db.MyCoins.find()
+    console.log("index.js - req.params.id", req.params.id);
+    let myCoins = await db.MyCoins.find({ user: req.params.id })
       .sort({
         symbol: "desc"
       })
@@ -41,7 +47,6 @@ app.use(function(req, res, next) {
 
 app.use(errorHandler);
 
-const port = 3025;
-app.listen(port, function() {
-  console.log("server started on port", port);
+app.listen(PORT, function() {
+  console.log("server started on PORT", PORT);
 });
